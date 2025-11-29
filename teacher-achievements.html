@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Portal - Verify Achievements</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="portal-layout">
+        <aside class="sidebar">
+            <div class="logo">Teacher Portal</div>
+            <nav>
+                <a href="teacher-dashboard.html">🧑‍🎓 Students</a>
+                <a href="teacher-achievements.html" class="active">🏅 Achievements (Verify)</a>
+                <a href="teacher-feedback.html">📝 Teacher Feedback</a>
+            </nav>
+            <a href="index.html" class="logout-btn">Log Out</a>
+        </aside>
+
+        <main class="content-area">
+            <h2>🏅 Achievement Verification Queue</h2>
+            
+            <section class="card-section">
+                <h3>Awaiting Your Approval (5)</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Achievement</th>
+                            <th>Date</th>
+                            <th>Proof</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Alice Johnson</td>
+                            <td>Regional Art Award</td>
+                            <td>2025-11-18</td>
+                            <td><a href="#">View File</a></td>
+                            <td>
+                                <button class="btn primary-btn small">Approve</button>
+                                <button class="btn secondary-btn small">Reject</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ben Carter</td>
+                            <td>Math Olympiad Team</td>
+                            <td>2025-11-20</td>
+                            <td><a href="#">View File</a></td>
+                            <td>
+                                <button class="btn primary-btn small">Approve</button>
+                                <button class="btn secondary-btn small">Reject</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+        </main>
+    </div>
+</body>
+</html>

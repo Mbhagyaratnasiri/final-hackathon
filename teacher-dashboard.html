@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Portal - Students</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Minimal CSS for the modal overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .profile-data p {
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        .profile-data strong {
+            display: inline-block;
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div class="portal-layout">
+        <aside class="sidebar">
+            <div class="logo">Teacher Portal</div>
+            <nav>
+                <a href="teacher-dashboard.html" class="active">🧑‍🎓 Students</a>
+                <a href="teacher-achievements.html">🏅 Achievements (Verify)</a>
+                <a href="teacher-feedback.html">📝 Teacher Feedback</a>
+            </nav>
+            <a href="index.html" class="logout-btn">Log Out</a>
+        </aside>
+
+        <main class="content-area">
+            <h2>🧑‍🎓 My Supervised Students</h2>
+            
+            <section class="card-section">
+                <h3>Students in My Class/Club</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Grade</th>
+                            <th>Role/Class</th>
+                            <th>Last Activity</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Alice Johnson</td>
+                            <td>11th</td>
+                            <td>Debate Club Head</td>
+                            <td>2 days ago</td>
+                            <td><button class="btn secondary-btn small" onclick="viewProfile('Alice Johnson')">View Profile</button></td>
+                        </tr>
+                        <tr>
+                            <td>Ben Carter</td>
+                            <td>10th</td>
+                            <td>Math Honors</td>
+                            <td>5 days ago</td>
+                            <td><button class="btn secondary-btn small" onclick="viewProfile('Ben Carter')">View Profile</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="card-section" style="margin-top: 30px;">
+                <h3>Quick Action: Submit Feedback</h3>
+                <p>Easily submit a quick note for a student (links to the feedback page).</p>
+            </section>
+        </main>
+    </div>
+
+    <div id="student-profile-modal" class="modal-overlay" onclick="if(event.target.id === 'student-profile-modal') closeModal()">
+        <div class="modal-content">
+            <h3 id="profile-name-header">Student Profile</h3>
+            <div class="profile-data">
+                <p><strong>Grade:</strong> <span id="profile-grade"></span></p>
+                <p><strong>Total Achievements:</strong> <span id="profile-achievements"></span></p>
+                <p><strong>Clubs/Activities:</strong> <span id="profile-clubs"></span></p>
+                <p><strong>Recent Feedback:</strong> <span id="profile-feedback"></span></p>
+                <p><strong>Teacher Notes:</strong> <span id="profile-notes"></span></p>
+            </div>
+            <button class="btn primary-btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Mock data structure to fill the profile
+        const STUDENT_DATA = {
+            "Alice Johnson": {
+                grade: "11th",
+                achievements: 8,
+                clubs: "Debate, Robotics",
+                feedback: "Excellent leadership in Nov.",
+                notes: "High potential for academic awards."
+            },
+            "Ben Carter": {
+                grade: "10th",
+                achievements: 3,
+                clubs: "Math Team, Chess Club",
+                feedback: "Strong work ethic in Oct.",
+                notes: "Requires encouragement in group projects."
+            }
+        };
+
+        function viewProfile(studentName) {
+            const data = STUDENT_DATA[studentName];
+            
+            if (data) {
+                // Populate the modal fields
+                document.getElementById('profile-name-header').textContent = `${studentName}'s Profile`;
+                document.getElementById('profile-grade').textContent = data.grade;
+                document.getElementById('profile-achievements').textContent = data.achievements;
+                document.getElementById('profile-clubs').textContent = data.clubs;
+                document.getElementById('profile-feedback').textContent = data.feedback;
+                document.getElementById('profile-notes').textContent = data.notes;
+                
+                // Display the modal
+                document.getElementById('student-profile-modal').style.display = 'flex';
+            } else {
+                alert(`Error: Profile data not found for ${studentName}`);
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('student-profile-modal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

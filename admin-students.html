@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal - Students</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Minimal CSS for the modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .modal-content h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .modal-content label, .modal-content input {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="portal-layout">
+        <aside class="sidebar">
+            <div class="logo">Admin Portal</div>
+            <nav>
+                <a href="admin-dashboard.html">📊 Dashboard</a>
+                <a href="admin-analytics.html">📈 Analytics</a>
+                <a href="admin-achievements.html">🏅 Achievements</a>
+                <a href="admin-students.html" class="active">🧑‍🎓 Students</a>
+            </nav>
+            <a href="index.html" class="logout-btn">Log Out</a>
+        </aside>
+
+        <main class="content-area">
+            <h2>🧑‍🎓 Student Management</h2>
+            
+            <button class="btn primary-btn" style="margin-bottom: 20px;" onclick="document.getElementById('add-student-modal').style.display='flex'">
+                + Add New Student
+            </button>
+
+            <section class="card-section">
+                <h3>All Registered Students (<span id="student-count">2</span>)</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Grade</th>
+                            <th>Total Achievements</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="student-table-body">
+                        <tr id="S1001">
+                            <td>S1001</td>
+                            <td>Jane Doe</td>
+                            <td>jane@school.edu</td>
+                            <td>10th</td>
+                            <td>5</td>
+                            <td>
+                                <button class="btn secondary-btn small">Edit/View</button>
+                                <button class="btn secondary-btn small delete-btn" onclick="deleteStudent('S1001')">Delete</button>
+                            </td>
+                        </tr>
+                        <tr id="S1002">
+                            <td>S1002</td>
+                            <td>Mark Smith</td>
+                            <td>mark@school.edu</td>
+                            <td>9th</td>
+                            <td>2</td>
+                            <td>
+                                <button class="btn secondary-btn small">Edit/View</button>
+                                <button class="btn secondary-btn small delete-btn" onclick="deleteStudent('S1002')">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+        </main>
+    </div>
+
+    <div id="add-student-modal" class="modal-overlay" onclick="if(event.target.id === 'add-student-modal') closeAddModal()">
+        <div class="modal-content">
+            <h3>Add New Student</h3>
+            <form onsubmit="addStudent(event)">
+                <label for="new-name">Full Name</label>
+                <input type="text" id="new-name" required>
+
+                <label for="new-email">Email</label>
+                <input type="email" id="new-email" required>
+                
+                <label for="new-grade">Grade</label>
+                <input type="number" id="new-grade" min="9" max="12" required>
+                
+                <button type="submit" class="btn primary-btn">Save Student</button>
+                <button type="button" class="btn secondary-btn" onclick="closeAddModal()">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Start counter after the last mocked ID (S1002)
+        let studentCounter = 1002; 
+        
+        function closeAddModal() {
+            document.getElementById('add-student-modal').style.display = 'none';
+        }
+
+        function updateStudentCount() {
+            // Updates the counter shown above the table
+            const rowCount = document.getElementById('student-table-body').rows.length;
+            document.getElementById('student-count').textContent = rowCount;
+        }
+
+        // --- ADD STUDENT FUNCTION ---
+        function addStudent(event) {
+            event.preventDefault(); // Prevents the form from attempting a server submission
+            
+            const name = document.getElementById('new-name').value;
+            const email = document.getElementById('new-email').value;
+            const grade = document.getElementById('new-grade').value;
+            
+            studentCounter++; 
+            const newId = 'S' + studentCounter;
+            
+            const tableBody = document.getElementById('student-table-body');
+            const newRow = tableBody.insertRow();
+            newRow.id = newId; // Set ID for deletion later
+            
+            newRow.innerHTML = `
+                <td>${newId}</td>
+                <td>${name}</td>
+                <td>${email}</td>
+                <td>${grade}th</td>
+                <td>0</td>
+                <td>
+                    <button class="btn secondary-btn small">Edit/View</button>
+                    <button class="btn secondary-btn small delete-btn" onclick="deleteStudent('${newId}')">Delete</button>
+                </td>
+            `;
+
+            // Clear the form, close the modal, and update the count
+            event.target.reset();
+            closeAddModal();
+            updateStudentCount();
+        }
+
+        // --- DELETE STUDENT FUNCTION ---
+        function deleteStudent(studentId) {
+            if (confirm(`Are you sure you want to permanently delete student ID ${studentId}?`)) {
+                const row = document.getElementById(studentId);
+                if (row) {
+                    row.remove();
+                    updateStudentCount();
+                    alert(`Student ID ${studentId} deleted.`);
+                }
+            }
+        }
+        
+        // Ensure the initial student count is correct when the page loads
+        document.addEventListener('DOMContentLoaded', updateStudentCount);
+    </script>
+</body>
+</html>

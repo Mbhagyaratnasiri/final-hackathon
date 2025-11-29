@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Portal - Feedback</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="portal-layout">
+        <aside class="sidebar">
+            <div class="logo">Teacher Portal</div>
+            <nav>
+                <a href="teacher-dashboard.html">🧑‍🎓 Students</a>
+                <a href="teacher-achievements.html">🏅 Achievements (Verify)</a>
+                <a href="teacher-feedback.html" class="active">📝 Teacher Feedback</a>
+            </nav>
+            <a href="index.html" class="logout-btn">Log Out</a>
+        </aside>
+
+        <main class="content-area">
+            <h2>📝 Teacher Feedback</h2>
+            
+            <section class="feedback-form-section card-section">
+                <h3>Submit Participation Notes</h3>
+                <form onsubmit="submitFeedback(event)">
+                    <label for="student">Select Student</label>
+                    <select id="student" required>
+                        <option value="">-- Select Student --</option>
+                        <option value="Alice Smith">Alice Smith</option>
+                        <option value="Bob Johnson">Bob Johnson</option>
+                    </select>
+
+                    <label for="activity">Related Activity/Club (Optional)</label>
+                    <input type="text" id="activity">
+                    
+                    <label for="feedback">Feedback/Notes</label>
+                    <textarea id="feedback" rows="5" placeholder="e.g., 'Bob showed great leadership during the debate club finals.'"></textarea>
+
+                    <button type="submit" class="btn primary-btn">Submit Feedback</button>
+                </form>
+            </section>
+
+            <section class="recent-feedback-list" style="margin-top: 30px;">
+                <h3>Recently Submitted Feedback</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Activity</th>
+                            <th>Date</th>
+                            <th>Notes Preview</th>
+                        </tr>
+                    </thead>
+                    <tbody id="feedback-table-body">
+                        <tr>
+                            <td>Alice Smith</td>
+                            <td>Chess Club</td>
+                            <td>2025-11-20</td>
+                            <td>Excellent progress in strategic thinking...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        function submitFeedback(event) {
+            event.preventDefault();
+            
+            const studentSelect = document.getElementById('student');
+            const studentName = studentSelect.options[studentSelect.selectedIndex].text;
+            const activity = document.getElementById('activity').value || 'N/A';
+            const feedback = document.getElementById('feedback').value;
+            const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD format
+
+            if (!feedback.trim()) {
+                alert('Please enter feedback notes before submitting.');
+                return;
+            }
+
+            // 1. Simulate server action and confirm
+            alert(`✅ Feedback successfully sent for ${studentName}.`);
+
+            // 2. Add the new entry to the table
+            const tableBody = document.getElementById('feedback-table-body');
+            const newRow = tableBody.insertRow(0); // Insert at the top
+            
+            newRow.innerHTML = `
+                <td>${studentName}</td>
+                <td>${activity}</td>
+                <td>${today}</td>
+                <td>${feedback.substring(0, 40)}...</td>
+            `;
+
+            // 3. Reset the form fields
+            event.target.reset();
+            studentSelect.value = ""; // Reset the dropdown
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal - Achievements</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="portal-layout">
+        <aside class="sidebar">
+            <div class="logo">Admin Portal</div>
+            <nav>
+                <a href="admin-dashboard.html">📊 Dashboard</a>
+                <a href="admin-analytics.html">📈 Analytics</a>
+                <a href="admin-achievements.html" class="active">🏅 Achievements</a>
+                <a href="admin-students.html">🧑‍🎓 Students</a>
+            </nav>
+            <a href="index.html" class="logout-btn">Log Out</a>
+        </aside>
+
+        <main class="content-area">
+            <h2>🏅 All Achievements & Approval Queue</h2>
+            
+            <section class="card-section">
+                <h3>Pending Achievements (12)</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Achievement</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>J. Doe</td>
+                            <td>State Science Fair Entry</td>
+                            <td>2025-11-25</td>
+                            <td><span style="color: orange;">Pending Admin</span></td>
+                            <td><button class="btn primary-btn small">Review</button></td>
+                        </tr>
+                        <tr>
+                            <td>S. Khan</td>
+                            <td>Volunteer Work (50 Hrs)</td>
+                            <td>2025-11-20</td>
+                            <td><span style="color: orange;">Pending Admin</span></td>
+                            <td><button class="btn primary-btn small">Review</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="card-section" style="margin-top: 30px;">
+                <h3>Recently Approved Achievements</h3>
+                <p>Full list of all approved achievements, sortable and searchable.</p>
+                </section>
+        </main>
+    </div>
+</body>
+</html>

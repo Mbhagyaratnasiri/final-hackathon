@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal - Analytics</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .bar-chart-placeholder {
+            display: flex;
+            align-items: flex-end;
+            height: 250px;
+            padding: 10px;
+            background: #ffffff;
+            border: 1px solid #ccc;
+            border-bottom: 2px solid #333;
+            gap: 10px;
+            justify-content: space-around;
+        }
+        .bar {
+            width: 50px;
+            background-color: var(--primary-color);
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        .bar-label {
+            color: var(--text-color);
+            text-align: center;
+            margin-top: 5px;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <div class="portal-layout">
+        <aside class="sidebar">
+            <div class="logo">Admin Portal</div>
+            <nav>
+                <a href="admin-dashboard.html">📊 Dashboard</a>
+                <a href="admin-analytics.html" class="active">📈 Analytics</a>
+                <a href="admin-achievements.html">🏅 Achievements</a>
+                <a href="admin-students.html">🧑‍🎓 Students</a>
+            </nav>
+            <a href="index.html" class="logout-btn">Log Out</a>
+        </aside>
+
+        <main class="content-area">
+            <h2>📈 Analytics & Reports</h2>
+            
+            <section class="card-section filter-area">
+                <h3>Report Filters</h3>
+                <label for="filter-year">Year:</label>
+                <select id="filter-year"><option>2025</option><option>2024</option></select>
+                <label for="filter-category">Category:</label>
+                <select id="filter-category"><option>All</option><option>Sports</option><option>Arts</option></select>
+                <button class="btn primary-btn">Apply Filters</button>
+            </section>
+
+            <section class="stats-grid" style="margin-top: 30px;">
+                <div class="stat-card"><h3>25%</h3><p>Increase in Participation YoY</p></div>
+                <div class="stat-card"><h3>Soccer</h3><p>Most Popular Activity</p></div>
+                <div class="stat-card"><h3>18</h3><p>Total Gold Awards Given</p></div>
+            </section>
+
+            <section class="chart-area card-section" style="margin-top: 30px;">
+                <h3>Achievement Distribution by Category (Total: 100)</h3>
+                <div class="bar-chart-placeholder">
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <div class="bar" style="height: 80%;">40</div>
+                        <div class="bar-label">Sports</div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <div class="bar" style="height: 50%; background-color: orange;">25</div>
+                        <div class="bar-label">Arts</div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <div class="bar" style="height: 30%; background-color: green;">15</div>
+                        <div class="bar-label">Academics</div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <div class="bar" style="height: 40%; background-color: purple;">20</div>
+                        <div class="bar-label">Volunteering</div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="chart-area card-section" style="margin-top: 30px;">
+                <h3>Monthly Achievement Submissions Trend</h3>
+                <div style="background: #e9ecef; height: 300px; padding: 20px; text-align: center; border: 1px dashed #6c757d;">
+                                        <p>Line Chart Placeholder: Visualizing submission volume over the last 6 months.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>🏆 Extracurricular Achievements Tracking</h1>
+    </header>
+
+    <main class="auth-form-container">
+        <h2>Log In</h2>
+        <form onsubmit="handleLogin(event)">
+            <label for="username">Email/Username</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit" class="btn primary-btn">Log In</button>
+        </form>
+        <p>Need an account? <a href="signup.html">Sign Up</a></p>
+    </main>
+
+    <script>
+        // --- MOCK USERS for DEMONSTRATION ---
+        const MOCK_USERS = {
+            "admin@school.edu": { password: "pass", role: "admin", dashboard: "admin-dashboard.html" },
+            "teacher@school.edu": { password: "pass", role: "teacher", dashboard: "teacher-dashboard.html" },
+            "student@school.edu": { password: "pass", role: "student", dashboard: "student-dashboard.html" }
+        };
+
+        function handleLogin(event) {
+            // Prevents the browser from trying to submit the form to a server URL
+            event.preventDefault(); 
+            
+            const username = document.getElementById('username').value.toLowerCase();
+            const password = document.getElementById('password').value;
+            
+            const user = MOCK_USERS[username];
+
+            if (user && user.password === password) {
+                // Success: Redirect to the appropriate dashboard
+                alert(`✅ Success! Logged in as ${user.role}.`);
+                window.location.href = user.dashboard; 
+            } else {
+                // Failure: Show an error message
+                alert('🚫 Login Failed: Invalid Email/Username or Password.');
+            }
+        }
+    </script>
+</body>
+</html>
