@@ -5,6 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* New style for the mock CAPTCHA display */
+        .captcha-box {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        #captcha-display {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+            letter-spacing: 2px;
+            /* Mock security features */
+            text-decoration: line-through; 
+            user-select: none;
+            margin-right: 10px;
+            min-width: 150px;
+            text-align: center;
+            border-radius: 4px;
+        }
+        .captcha-box button {
+            /* Small button style for refresh */
+            padding: 8px 12px;
+            font-size: 0.9em;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -20,6 +49,12 @@
             <label for="password">Password</label>
             <input type="password" id="password" name="password" required>
 
+            <label for="captcha-input">Enter the CAPTCHA Text</label>
+            <div class="captcha-box">
+                <div id="captcha-display"></div>
+                <button type="button" class="btn secondary-btn" onclick="generateCaptcha()">🔄</button>
+            </div>
+            <input type="text" id="captcha-input" name="captcha-input" required placeholder="Enter the text above">
             <button type="submit" class="btn primary-btn">Log In</button>
         </form>
         <p>Need an account? <a href="signup.html">Sign Up</a></p>
@@ -33,13 +68,37 @@
             "student@school.edu": { password: "pass", role: "student", dashboard: "student-dashboard.html" }
         };
 
+        // --- CAPTCHA GENERATION FUNCTION ---
+        let currentCaptcha = '';
+        const CAPTCHA_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+        function generateCaptcha() {
+            let captcha = '';
+            for (let i = 0; i < 6; i++) {
+                captcha += CAPTCHA_CHARS.charAt(Math.floor(Math.random() * CAPTCHA_CHARS.length));
+            }
+            currentCaptcha = captcha;
+            document.getElementById('captcha-display').textContent = captcha;
+        }
+
+        // --- LOGIN HANDLER ---
         function handleLogin(event) {
             // Prevents the browser from trying to submit the form to a server URL
             event.preventDefault(); 
             
             const username = document.getElementById('username').value.toLowerCase();
             const password = document.getElementById('password').value;
+            const captchaInput = document.getElementById('captcha-input').value;
+
+            // 1. CAPTCHA Check (case-insensitive)
+            if (captchaInput.toLowerCase() !== currentCaptcha.toLowerCase()) {
+                alert('🚫 CAPTCHA Failed: Please enter the text correctly.');
+                document.getElementById('captcha-input').value = ''; // Clear input
+                generateCaptcha(); // Generate new CAPTCHA
+                return; 
+            }
             
+            // 2. Original Login Logic
             const user = MOCK_USERS[username];
 
             if (user && user.password === password) {
@@ -47,10 +106,15 @@
                 alert(`✅ Success! Logged in as ${user.role}.`);
                 window.location.href = user.dashboard; 
             } else {
-                // Failure: Show an error message
+                // Failure: Show an error message and regenerate CAPTCHA for next attempt
                 alert('🚫 Login Failed: Invalid Email/Username or Password.');
+                document.getElementById('captcha-input').value = ''; // Clear input
+                generateCaptcha(); // Generate new CAPTCHA
             }
         }
+
+        // Initialize the CAPTCHA when the page loads
+        document.addEventListener('DOMContentLoaded', generateCaptcha);
     </script>
 </body>
 </html>
